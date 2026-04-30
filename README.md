@@ -21,3 +21,4 @@ Coming soon!
 
 - Supabase (database and authentication)
 
+Homepage is coming in v2!"
