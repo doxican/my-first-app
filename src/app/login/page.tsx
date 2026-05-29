@@ -19,7 +19,6 @@ export default function LoginPage() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const supabase = createClient();
 
   useEffect(() => {
     setRememberMe(getRememberMeFromStorage());
@@ -36,6 +35,7 @@ export default function LoginPage() {
     setError(null);
     setRememberMePreference(rememberMe);
 
+    const supabase = createClient();
     const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
