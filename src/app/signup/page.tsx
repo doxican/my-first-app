@@ -3,6 +3,7 @@
 import AuthDivider from "@/components/auth/auth-divider";
 import GoogleSignInButton from "@/components/auth/google-sign-in-button";
 import { signInWithGoogle } from "@/lib/auth/oauth";
+import { getAuthCallbackUrl } from "@/lib/auth/redirect-url";
 import {
   getRememberMeFromStorage,
   setRememberMePreference,
@@ -50,6 +51,9 @@ export default function SignupPage() {
     const { error } = await supabase.auth.signUp({
       email,
       password,
+      options: {
+        emailRedirectTo: getAuthCallbackUrl(),
+      },
     });
 
     if (error) {
