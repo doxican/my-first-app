@@ -10,6 +10,10 @@ export function createClient() {
   return createBrowserClient(getSupabaseUrl(), getSupabaseKey(), {
     cookies: {
       getAll() {
+        // Client components are pre-rendered on the server — no `document` there
+        if (typeof document === "undefined") {
+          return [];
+        }
         const parsed = parse(document.cookie);
         return Object.keys(parsed).map((name) => ({
           name,
@@ -17,6 +21,9 @@ export function createClient() {
         }));
       },
       setAll(cookiesToSet) {
+        if (typeof document === "undefined") {
+          return;
+        }
         const rememberMe = getRememberMeFromStorage();
         cookiesToSet.forEach(({ name, value, options }) => {
           document.cookie = serialize(
